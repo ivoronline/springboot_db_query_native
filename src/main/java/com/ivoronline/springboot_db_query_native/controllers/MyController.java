@@ -12,17 +12,6 @@ public class MyController {
 
   @Autowired PersonRepository personRepository;
 
-
-  //================================================================
-  // LOAD DATA
-  //================================================================
-  @RequestMapping("LoadData")
-  String loadData() {
-    personRepository.save(new Person("John" , 20));
-    personRepository.save(new Person("John" , 30));
-    return "Data Loaded";
-  }
-
   //================================================================
   // NO PARAMETERS
   //================================================================
