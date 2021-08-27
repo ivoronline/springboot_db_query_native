@@ -5,49 +5,59 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface PersonRepository extends CrudRepository<Person, Integer> {
 
   //=======================================================================================
-  // SELECT
+  // PARAMETERS
   //=======================================================================================
-
   //NO PARAMETERS
-  @Query(nativeQuery = true, value = "SELECT * FROM PERSON WHERE NAME = 'John' AND AGE = 20")
-  Person getJohn();
+  @Query(value = "SELECT * FROM PERSON WHERE NAME = 'John' AND AGE = 20", nativeQuery = true)
+  Person noParameters();
 
   //INDEXED PARAMETERS
-  @Query(nativeQuery = true, value = "SELECT * FROM PERSON WHERE NAME = ?1 AND AGE = ?2")
-  Person selectPersonByNameAgeIndexed(String name, Integer age);
+  @Query(value = "SELECT * FROM PERSON WHERE NAME = ?1 AND AGE = ?2", nativeQuery = true)
+  Person indexedParameters(String name, Integer age);
 
   //NAMED PARAMETERS
-  @Query(nativeQuery = true, value = "SELECT * FROM PERSON WHERE NAME = :name AND AGE = :parameterAge")
-  Person selectPersonByNameAgeNamed(String name, @Param("parameterAge") Integer age);
+  @Query(value = "SELECT * FROM PERSON WHERE NAME = :name AND AGE = :parameterAge", nativeQuery = true)
+  Person namedParameters(String name, @Param("parameterAge") Integer age);
+
+  //=======================================================================================
+  // SELECT
+  //=======================================================================================
+  //RETURN SINGLE ENTITY
+  @Query(value = "SELECT * FROM PERSON WHERE NAME = :name AND AGE = :age", nativeQuery = true)
+  Person selectPersonByNameAge(String name, Integer age);
 
   //RETURN LIST
-  @Query(nativeQuery = true, value = "SELECT * FROM PERSON WHERE NAME = :name")
+  @Query(value = "SELECT * FROM PERSON WHERE NAME = :name", nativeQuery = true)
   List<Person> selectPersonsByName(String name);
 
   //=======================================================================================
   // UPDATE
   //=======================================================================================
   @Modifying
-  @Query(nativeQuery = true, value = "UPDATE PERSON SET AGE = :newAge WHERE NAME = :name")
+  @Transactional
+  @Query(value = "UPDATE PERSON SET AGE = :newAge WHERE NAME = :name", nativeQuery = true)
   Integer updatePersonsByName(String name, Integer newAge);
 
   //=======================================================================================
   // DELETE
   //=======================================================================================
   @Modifying
-  @Query(nativeQuery = true, value = "DELETE FROM PERSON WHERE NAME = :name")
+  @Transactional
+  @Query(value = "DELETE FROM PERSON WHERE NAME = :name", nativeQuery = true)
   Integer deletePersonsByName(String name);
 
   //=======================================================================================
   // INSERT
   //=======================================================================================
   @Modifying
-  @Query(nativeQuery = true, value = "INSERT INTO PERSON (name, age) VALUES (:name, :age)")
+  @Transactional
+  @Query(value = "INSERT INTO PERSON (name, age) VALUES (:name, :age)", nativeQuery = true)
   Integer insertPerson(String name, Integer age);
 
 }
