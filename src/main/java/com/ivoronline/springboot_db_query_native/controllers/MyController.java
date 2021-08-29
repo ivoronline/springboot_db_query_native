@@ -1,10 +1,12 @@
 package com.ivoronline.springboot_db_query_native.controllers;
 
 import com.ivoronline.springboot_db_query_native.entities.Person;
+import com.ivoronline.springboot_db_query_native.dto.PersonDTO;
 import com.ivoronline.springboot_db_query_native.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 @RestController
