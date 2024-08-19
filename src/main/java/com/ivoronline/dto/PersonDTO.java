@@ -1,4 +1,4 @@
-package com.ivoronline.springboot_db_query_native.dto;
+package com.ivoronline.dto;
 
 public class PersonDTO {
 

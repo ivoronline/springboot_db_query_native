@@ -1,4 +1,4 @@
-package com.ivoronline.springboot_db_query_native.entities;
+package com.ivoronline.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
